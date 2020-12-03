@@ -1,9 +1,9 @@
-import java.util.List;
+import java.util.ArrayList;
 
 class PriceCollection {
-    private List<StockPrice> prices;
+    private ArrayList<StockPrice> prices;
 
-    public List<StockPrice> getPriceList() {
+    public ArrayList<StockPrice> getPriceList() {
         return prices;
     }
 }
