@@ -1,7 +1,8 @@
 import java.util.ArrayList;
 
+
 class PriceCollection {
-    private ArrayList<StockPrice> prices;
+    private final ArrayList<StockPrice> prices;
 
     public PriceCollection(ArrayList<StockPrice> prices) {
         this.prices = prices;
@@ -10,4 +11,5 @@ class PriceCollection {
     public ArrayList<StockPrice> getPriceList() {
         return prices;
     }
+
 }

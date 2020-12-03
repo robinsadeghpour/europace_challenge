@@ -1,12 +1,9 @@
 import com.google.gson.Gson;
-
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
 import java.util.Date;
 
 
@@ -23,6 +20,8 @@ public class Data {
 
     /**
      * This fucntion reads the test.json from hypoport.json and deserialize it to a PriceCollection Object
+     *
+     * @param path : string containing path to json file
      */
     public void deserializeJSON(String path) {
         try {

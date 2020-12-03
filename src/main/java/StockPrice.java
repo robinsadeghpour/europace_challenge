@@ -1,20 +1,16 @@
 class StockPrice {
-    private long date;
-    private float open;
-    private float high;
-    private float low;
-    private float close;
-    private int volume;
-    private float adjclose;
+    private final long date;
+    private final float open;
+    private final float high;
+    private final float low;
+    private final float close;
 
-    public StockPrice(long date, float open, float high, float low, float close, int volume, float adjclose) {
+    public StockPrice(long date, float open, float high, float low, float close) {
         this.date = date;
         this.open = open;
         this.high = high;
         this.low = low;
         this.close = close;
-        this.volume = volume;
-        this.adjclose = adjclose;
     }
 
     public long getDate() {

@@ -1,47 +1,63 @@
 import java.nio.file.FileSystems;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
 import static org.junit.jupiter.api.Assertions.*;
 
+
 class DataTest {
-    private String path =  FileSystems.getDefault().getPath("src/test/resources/test.json").toString();
+    private final String path1 =  FileSystems.getDefault().getPath("src/test/resources/test.json").toString();
+    private final String path2 =  FileSystems.getDefault().getPath("src/test/resources/empty_list.json").toString();
+
 
 
     @org.junit.jupiter.api.Test
     void deserializeJSON() {
-        Data data = new Data(path);
+        assertTrue(checkDeserializeEqual(new Data(path1)), "correct data set failed");
+        assertFalse(checkDeserializeEqual(new Data(path2)), "empty list failed");
+    }
+
+    /**
+     * this is a helpfer function for deserializeJSON test
+     *
+     * @param data : data object which should be tested
+     *
+     * @return true if the data object is correctly deserialized
+     */
+    Boolean checkDeserializeEqual (Data data) {
         ArrayList<StockPrice> list1 = initializePriceCollection().getPriceList();
         ArrayList<StockPrice> list2 = data.getPrices();
 
-        assertEquals(list1.size(), list2.size(), "lists not same size");
+        boolean isSizeEqual = list1.size() == list2.size();
+        boolean areItemsEqual = false;
+
         list1.sort((o1, o2) -> -Float.compare(o1.getClose(), o2.getClose()));
         list2.sort((o1, o2) -> -Float.compare(o1.getClose(), o2.getClose()));
         StockPrice item1;
         StockPrice item2;
 
-        for (int i = 0; i < list1.size(); i++) {
+        for (int i = 0; i < list2.size() && isSizeEqual; i++) {
             item1 = list1.get(i);
             item2 = list2.get(i);
 
-            assertEquals(item1.getDate(), item2.getDate());
+            areItemsEqual = item1.getDate() == item2.getDate();
         }
+
+        return isSizeEqual && areItemsEqual;
     }
 
     @org.junit.jupiter.api.Test
     void getDayMinPrice() {
-        Data data = new Data(path);
+        Data data = new Data(path1);
         Date date1 = data.getDayMinPrice();
         Date date2 = data.convertEpochToDate(1605772800);
 
-        assertTrue(compareDates(date1, date2), "not correct min date");
+        assertTrue(compareDates(date1, date2));
     }
 
     @org.junit.jupiter.api.Test
     void getDayMaxPrice() {
-        Data data = new Data(path);
+        Data data = new Data(path1);
         Date date1 = data.getDayMaxPrice();
         Date date2 = data.convertEpochToDate(1605686400);
 
@@ -50,7 +66,7 @@ class DataTest {
 
     @org.junit.jupiter.api.Test
     void getDayMaxDifference() {
-        Data data = new Data(path);
+        Data data = new Data(path1);
         Date date1 = data.getDayMaxDifference();
         Date date2 = data.convertEpochToDate(1605686400);
 
@@ -59,7 +75,7 @@ class DataTest {
 
     @org.junit.jupiter.api.Test
     void getAverageClosePrice() {
-        Data data = new Data(path);
+        Data data = new Data(path1);
         float avgPrice = (float) (433.5 + 436.5) / 2;
         assertEquals(data.getAverageClosePrice(), avgPrice, "not correct max difference date");
     }
@@ -92,8 +108,8 @@ class DataTest {
 
     private PriceCollection initializePriceCollection() {
         ArrayList<StockPrice> prices = new ArrayList<>();
-        StockPrice price1 = new StockPrice(1605772800, 427, 439, 427, (float) 436.5, 7232, (float) 436.5);
-        StockPrice price2 = new StockPrice(1605686400, 439, 450, (float) 428.5, (float) 433.5, 5604, (float) 433.5);
+        StockPrice price1 = new StockPrice(1605772800, 427, 439, 427, (float) 436.5);
+        StockPrice price2 = new StockPrice(1605686400, 439, 450, (float) 428.5, (float) 433.5);
 
         prices.add(price1);
         prices.add(price2);
