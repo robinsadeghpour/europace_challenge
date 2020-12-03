@@ -1,3 +1,4 @@
+import java.nio.file.FileSystems;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -6,7 +7,7 @@ import java.util.Date;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DataTest {
-    private String path = Paths.get("").toAbsolutePath() + "\\src\\test\\resources\\test.json";
+    private String path =  FileSystems.getDefault().getPath("src/test/resources/test.json").toString();
 
 
     @org.junit.jupiter.api.Test
