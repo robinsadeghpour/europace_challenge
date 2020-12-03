@@ -13,17 +13,20 @@ import java.util.Date;
 public class Data {
     private ArrayList<StockPrice> prices;
 
-    public Data() {
-        deserializeJSON();
+    public Data(String path) {
+        deserializeJSON(path);
+    }
+
+    public ArrayList<StockPrice> getPrices() {
+        return prices;
     }
 
     /**
-     * This fucntion reads the JSON from hypoport.json and deserialize it to a PriceCollection Object
+     * This fucntion reads the test.json from hypoport.json and deserialize it to a PriceCollection Object
      */
-    public void deserializeJSON() {
+    public void deserializeJSON(String path) {
         try {
             Gson gson = new Gson();
-            String path = Paths.get("").toAbsolutePath()+ "\\src\\main\\resources\\hypoport.json";
             Reader reader = Files.newBufferedReader(Paths.get(path));
 
             // deserialize with gson.fromJson
@@ -37,29 +40,28 @@ public class Data {
     }
 
     /**
-     *
      * @return date of the day with the lowest price
      */
     public Date getDayMinPrice() {
-        prices.sort((o1, o2) -> -Float.compare(o1.getLow(), o2.getLow()));
+        prices.sort((o1, o2) -> Float.compare(o1.getLow(), o2.getLow()));
+
+        System.out.println(prices.get(0).getDate() + " " + prices.get(0).getLow());
         return convertEpochToDate(prices.get(0).getDate());
     }
 
     /**
-     *
      * @return date of the day with the highest price
      */
     public Date getDayMaxPrice() {
-        prices.sort((o1, o2) -> -Float.compare(o1.getHigh(), o2.getHigh()));
+        prices.sort((o1, o2) -> Float.compare(o2.getHigh(), o1.getHigh()));
         return convertEpochToDate(prices.get(0).getDate());
     }
 
     /**
-     *
      * @return date of the day with the biggest difference between closing price and opening price
      */
     public Date getDayMaxDifference() {
-        prices.sort((o1, o2) -> -Float.compare(o1.getDifference(), o2.getDifference()));
+        prices.sort((o1, o2) -> -Float.compare(o2.getDifference(), o1.getDifference()));
         return convertEpochToDate(prices.get(0).getDate());
     }
 
@@ -78,13 +80,11 @@ public class Data {
             i++;
         }
 
-        return  sum / ((float) size);
+        return sum / ((float) size);
     }
 
     /**
-     *
      * @param epoch : date in epoch format
-     *
      * @return date in java date format
      */
     public Date convertEpochToDate(long epoch) {

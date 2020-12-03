@@ -1,0 +1,22 @@
+{
+  "prices": [
+    {
+      "date": 1605772800,
+      "open": 427,
+      "high": 439,
+      "low": 427,
+      "close": 436.5,
+      "volume": 7232,
+      "adjclose": 436.5
+    },
+    {
+      "date": 1605686400,
+      "open": 439,
+      "high": 450,
+      "low": 428.5,
+      "close": 433.5,
+      "volume": 5604,
+      "adjclose": 433.5
+    }
+  ]
+}
